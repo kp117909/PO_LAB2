@@ -1,4 +1,8 @@
+import javax.swing.*;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Person {
     private String name;
@@ -7,13 +11,12 @@ public class Person {
     private String adress;
     private LocalDate dateOfBirth;
 
-
-    public Person(String name, String email, String phoneNumber, String adress, LocalDate dateOfBirth) {
+    public Person(String name, String email, String phoneNumber, String adress, String dateOfBirth) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.adress = adress;
-        this.dateOfBirth = dateOfBirth;
+        this.setDateOfBirth(dateOfBirth);
     }
 
     public String getName() {
@@ -52,7 +55,15 @@ public class Person {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
+
+    public int getAge(){
+        LocalDate todey = LocalDate.now();
+        Period period = Period.between(this.dateOfBirth, todey);
+        return period.getYears();
+    }
+
+
 }
